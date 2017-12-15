@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Crystal Game</title>
+      <link rel="stylesheet" href="Assets/css/reset.css">
+      <link rel="stylesheet" href="Assets/css/style.css">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+
+<body>
+
+<div class ="container"> 
+
+  <div id="crystals-collector">
+      <div id="title"> Crystals Collector!</div>
+<!--       <div id="start">Click to start</div> -->
+  </div>
+
+  <div id="instructions">
+    <h5>You will be given a random number at the start of the game in the box below the instructions box.<br><br>
+      Click any combination of the four crystals to add to your total score.<br><br>
+      You win the game by matching the random number to your total score.  You lose if your total score exceeds the random number.<br><br>
+      When the game restarts, a new random number will be shown.
+    </h5>
+
+  </div>
+
+  <div id="target-and-score">
+
+      <div id="target-number">
+        <div id="actual-target"></div>
+      </div>
+
+      <div id="wins-losses">
+        <div id="wins">
+            <h1>Wins</h1>
+            <div id="wins-score">
+              <h2>0</h1>
+            </div>
+        </div>
+        <div id="losses">
+            <h1>Losses</h1>
+            <div id="losses-score">
+              <h3>0</h3>
+            </div>
+        </div>
+      </div>
+  </div>
+
+
+  <div id="crystal-div">
+
+      <div>
+          <img id="red-crystal" src="Assets/images/red-crystal.jpg" alt="red crystal" height="50" width="50">
+      </div>
+
+       <div>
+          <img id="blue-crystal" src="Assets/images/blue-crystal.jpg" alt="blue crystal" height="50" width="50">
+      </div>
+
+       <div>
+          <img id="yellow-crystal" src="Assets/images/yellow-crystal.jpg" alt="yellow crystal" height="50" width="50">
+      </div>
+
+       <div>
+          <img id="green-crystal" src="Assets/images/green-crystal.jpg" alt="green crystal" height="50" width="50">
+      </div>
+
+  </div>
+
+  <div id="bottom-div">
+
+      <div id="total-score-header">
+        <h4>Your total score is:</h4>
+      </div>
+
+      <div id="your-sum">
+        <div id="your-sum-number">0</div>
+      </div> 
+  </div>
+
+</div>
+
+
+<script>
+
+// Random number between 19 - 120.  If then to get the range.
+
+let target = getRandomInt();
+
+function getRandomInt(){
+  min = Math.ceil(19);
+  max = Math.floor(120);
+  const target = Math.floor(Math.random()*(max - min) + min);
+  // console.log(target);
+  $("#actual-target").text(target);
+  return target;
+}
+
+
+// Sum user clicks
+
+let userSum = 0;
+let totalWins = 0;
+let totalLosses = 0;
+
+document.getElementById("red-crystal").addEventListener("click", redCrystal);
+
+document.getElementById("blue-crystal").addEventListener("click", blueCrystal);
+
+document.getElementById("green-crystal").addEventListener("click", greenCrystal);
+
+document.getElementById("yellow-crystal").addEventListener("click", yellowCrystal);
+
+
+// Assign crystal values
+
+function redCrystal(){
+  userSum = userSum + 3;
+  $("#your-sum-number").text(userSum);
+  checkWin();
+  checkLoss();
+}
+
+function blueCrystal(){
+  userSum = userSum + 1;
+  $("#your-sum-number").text(userSum);
+  checkWin();
+  checkLoss();
+}
+
+function yellowCrystal(){
+  userSum = userSum + 5;
+  $("#your-sum-number").text(userSum);
+  checkWin();
+  checkLoss();
+}
+
+function greenCrystal(){
+  userSum = userSum + 12;
+  $("#your-sum-number").text(userSum);
+  checkWin();
+  checkLoss();
+}
+
+function checkLoss(){
+  if(userSum > target){
+    userSum=0;
+    totalLosses = totalLosses + 1;
+    $("h3").text(totalLosses);
+    reset();
+  }
+}
+
+function checkWin(){
+  // console.log(userSum);
+  // console.log(target);
+  if(userSum == target){
+    userSum=0;
+    totalWins = totalWins + 1;
+    $("h2").text(totalWins);
+    reset();
+  }
+}
+
+function reset(){
+  target = getRandomInt();
+  return target;
+  console.log(target);
+}
+
+</script>
+
+
+</body>
+
+</html>
